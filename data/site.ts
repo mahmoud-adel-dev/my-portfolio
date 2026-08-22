@@ -9,7 +9,8 @@
  * The contact section renders it only when non-empty; no fake data is shown.
  */
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const siteUrl = configuredUrl ? configuredUrl : "http://localhost:3000";
 
 export const site = {
   name: "Mahmoud Adel",
