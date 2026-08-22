@@ -1,0 +1,36 @@
+{
+  "name": "mahmoud-adel-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio of Mahmoud Adel — Full-Stack & AI SaaS Engineer",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@base-ui-components/react": "^1.0.0-rc.0",
+    "clsx": "^2.1.1",
+    "geist": "^1.7.2",
+    "lucide-react": "^1.33.0",
+    "motion": "^13.1.1",
+    "next": "^16.3.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.10.9",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
