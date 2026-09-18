@@ -16,23 +16,50 @@ export function resolveSiteUrl(
   options: SiteUrlOptions = {},
 ): string {
   const nodeEnv = options.nodeEnv ?? process.env.NODE_ENV;
-  const fallback = "http://localhost:3000";
-  const parsed = absoluteUrl.safeParse(configuredUrl || fallback);
 
-  if (!parsed.success) {
-    throw new Error("NEXT_PUBLIC_SITE_URL must be an absolute URL.");
-  }
+  // 1. Check browser origin if client-side
+  const browserOrigin =
+    typeof window !== "undefined" && window.location?.origin
+      ? window.location.origin
+      : undefined;
 
-  const url = new URL(parsed.data);
-  const isLocal = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+  // 2. Check Vercel auto-provided domain
+  const rawVercel =
+    process.env.NEXT_PUBLIC_VERCEL_URL ||
+    process.env.VERCEL_URL ||
+    process.env.NEXT_PUBLIC_SITE_URL;
 
+  const vercelOrigin = rawVercel
+    ? `https://${rawVercel.replace(/^https?:\/\//, "")}`
+    : undefined;
+
+  const fallback =
+    browserOrigin ||
+    vercelOrigin ||
+    (nodeEnv === "production"
+      ? "https://mahmoud-adel-dev-my-portfolio.vercel.app"
+      : "http://localhost:3000");
+
+  let candidate = configuredUrl || vercelOrigin || fallback;
+
+  // If in production and candidate is http://localhost, use Vercel / browser fallback
   if (nodeEnv === "production" && !options.allowLocalProduction) {
-    if (isLocal || url.protocol !== "https:") {
-      throw new Error(
-        "Production requires NEXT_PUBLIC_SITE_URL to use a public HTTPS origin.",
-      );
+    if (
+      candidate.includes("localhost") ||
+      candidate.includes("127.0.0.1") ||
+      !candidate.startsWith("https://")
+    ) {
+      candidate =
+        browserOrigin && browserOrigin.startsWith("https://")
+          ? browserOrigin
+          : vercelOrigin || "https://mahmoud-adel-dev-my-portfolio.vercel.app";
     }
   }
 
-  return parsed.data;
+  const parsed = absoluteUrl.safeParse(candidate);
+  if (parsed.success) {
+    return parsed.data;
+  }
+
+  return fallback;
 }
