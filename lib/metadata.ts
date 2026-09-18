@@ -1,28 +1,43 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
+import { localePath, type Locale } from "@/lib/i18n";
 
 type PageMetadataInput = {
   title: string;
   description: string;
-  /** Path without leading slash, or undefined for the homepage. */
+  locale: Locale;
   path?: string;
 };
 
-/** Builds consistent Metadata for a page, relative to the canonical site URL. */
-export function buildMetadata({ title, description, path }: PageMetadataInput): Metadata {
-  const url = new URL(path ? `/${path}` : "/", site.url);
+export function buildMetadata({
+  title,
+  description,
+  locale,
+  path = "",
+}: PageMetadataInput): Metadata {
+  const localizedPath = localePath(locale, path);
+  const alternatePath = localePath(locale === "en" ? "ar" : "en", path);
+  const canonical = new URL(localizedPath, site.url).toString();
 
   return {
     title,
     description,
-    alternates: { canonical: url.toString() },
+    alternates: {
+      canonical,
+      languages: {
+        [locale]: canonical,
+        [locale === "en" ? "ar" : "en"]: new URL(alternatePath, site.url).toString(),
+        "x-default": new URL(localePath("en", path), site.url).toString(),
+      },
+    },
     openGraph: {
       title,
       description,
-      url: url.toString(),
+      url: canonical,
       siteName: `${site.name} — ${site.role}`,
       type: "website",
-      locale: "en_US",
+      locale: locale === "ar" ? "ar_EG" : "en_US",
+      alternateLocale: locale === "ar" ? ["en_US"] : ["ar_EG"],
     },
     twitter: {
       card: "summary_large_image",
@@ -32,15 +47,17 @@ export function buildMetadata({ title, description, path }: PageMetadataInput): 
   };
 }
 
-/** JSON-LD Person graph — only truthy, publicly verifiable fields. */
-export function personJsonLd() {
+export function personJsonLd(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: site.name,
-    jobTitle: site.role,
-    url: site.url,
-    sameAs: [site.github.url],
+    name: locale === "ar" ? "محمود عادل" : site.name,
+    jobTitle:
+      locale === "ar"
+        ? "مهندس برمجيات متكامل ومنصات SaaS بالذكاء الاصطناعي"
+        : site.role,
+    url: new URL(localePath(locale), site.url).toString(),
+    sameAs: [site.github.url, site.facebook.url],
     knowsAbout: [
       "Full-stack engineering",
       "SaaS architecture",

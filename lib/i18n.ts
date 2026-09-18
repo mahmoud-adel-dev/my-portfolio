@@ -2,8 +2,19 @@ export const supportedLocales = ["en", "ar"] as const;
 
 export type Locale = (typeof supportedLocales)[number];
 
-export function isLocale(value: string | null): value is Locale {
+export const defaultLocale: Locale = "en";
+
+export function isLocale(value: unknown): value is Locale {
   return value === "en" || value === "ar";
+}
+
+export function localePath(locale: Locale, path = ""): string {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `/${locale}${normalizedPath === "/" ? "" : normalizedPath}`;
+}
+
+export function alternateLocale(locale: Locale): Locale {
+  return locale === "en" ? "ar" : "en";
 }
 
 export const translations = {
@@ -268,3 +279,5 @@ export const translations = {
     skipToContent: "تجاوز إلى المحتوى",
   },
 } as const;
+
+export type Translation = (typeof translations)[Locale];

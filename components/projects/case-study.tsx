@@ -1,13 +1,11 @@
-"use client";
-
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { usePreferences } from "@/components/providers/preferences-provider";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Diagram } from "@/components/projects/diagrams";
+import { ProjectIcon } from "@/components/projects/project-icon";
 import { getAdjacentProjects, type Project } from "@/data/projects";
 import { localizeProject } from "@/data/project-localizations";
-import { translations } from "@/lib/i18n";
+import { localePath, translations, type Locale } from "@/lib/i18n";
 
 /**
  * Case-study body. A fixed editorial frame (label column + content column)
@@ -31,8 +29,13 @@ function Block({
   );
 }
 
-export function CaseStudy({ project: sourceProject }: { project: Project }) {
-  const { locale } = usePreferences();
+export function CaseStudy({
+  project: sourceProject,
+  locale,
+}: {
+  project: Project;
+  locale: Locale;
+}) {
   const copy = translations[locale].caseStudy;
   const project = localizeProject(sourceProject, locale);
   const cs = project.caseStudy;
@@ -42,16 +45,17 @@ export function CaseStudy({ project: sourceProject }: { project: Project }) {
   return (
     <>
       {/* Header */}
-      <header className="container-site pt-32 pb-14 md:pt-40 md:pb-20">
+      <header className="container-site pt-32 pb-16 md:pt-40 md:pb-20">
         <Link
-          href="/#work"
-          className="link-arrow -ml-0.5 font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-fg"
+          href={`${localePath(locale)}#work`}
+          className="link-arrow -ms-0.5 font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-fg"
         >
           <ArrowLeft size={14} strokeWidth={1.5} className="directional-icon" />
           {copy.allWork}
         </Link>
 
-        <div className="mt-10 flex flex-wrap items-baseline gap-x-5 gap-y-2">
+        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+          <ProjectIcon id={project.slug} />
           <span aria-hidden="true" className="font-mono text-sm text-accent">
             {project.index}
           </span>
@@ -115,9 +119,10 @@ export function CaseStudy({ project: sourceProject }: { project: Project }) {
           <Diagram
             id={cs.architecture.diagram}
             caption={`${copy.diagramCaption} — ${project.title}`}
+            locale={locale}
           />
         </div>
-        <ul className="mt-8 space-y-3 border-l border-line pl-5">
+        <ul className="mt-8 space-y-3 border-s border-line ps-5">
           {cs.architecture.notes.map((note) => (
             <li key={note.slice(0, 32)} className="text-sm leading-relaxed text-faint">
               {note}
@@ -185,15 +190,14 @@ export function CaseStudy({ project: sourceProject }: { project: Project }) {
         </div>
       </Block>
 
-      <ProjectNav currentSlug={project.slug} />
+      <ProjectNav currentSlug={project.slug} locale={locale} />
     </>
   );
 }
 
 /* -------------------------------------------------------------------------- */
 
-function ProjectNav({ currentSlug }: { currentSlug: string }) {
-  const { locale } = usePreferences();
+function ProjectNav({ currentSlug, locale }: { currentSlug: string; locale: Locale }) {
   const copy = translations[locale].caseStudy;
   const { next } = getAdjacentProjects(currentSlug);
 
@@ -203,7 +207,7 @@ function ProjectNav({ currentSlug }: { currentSlug: string }) {
   return (
     <nav aria-label={copy.nextLabel} className="border-t border-line">
       <Link
-        href={`/projects/${localizedNext.slug}`}
+        href={localePath(locale, `projects/${localizedNext.slug}`)}
         className="group container-site flex items-center justify-between gap-6 py-12 md:py-16"
       >
         <div>

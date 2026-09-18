@@ -1,12 +1,8 @@
-"use client";
-
-import { usePreferences } from "@/components/providers/preferences-provider";
 import { Section } from "@/components/ui/section";
-import { translations } from "@/lib/i18n";
+import { translations, type Locale } from "@/lib/i18n";
 
 /** Concise About — engineering interests only, no invented biography. */
-export function About() {
-  const { locale } = usePreferences();
+export function About({ locale }: { locale: Locale }) {
   const copy = translations[locale].about;
 
   return (

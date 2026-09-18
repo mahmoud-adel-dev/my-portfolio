@@ -1,16 +1,12 @@
-"use client";
-
-import { usePreferences } from "@/components/providers/preferences-provider";
 import { Section } from "@/components/ui/section";
 import { getStackGroups } from "@/data/expertise";
-import { translations } from "@/lib/i18n";
+import { translations, type Locale } from "@/lib/i18n";
 
 /**
  * "Built With" — technologies organized by responsibility.
  * A typographic index: label, note, then the tools. No logos, no percentages.
  */
-export function Stack() {
-  const { locale } = usePreferences();
+export function Stack({ locale }: { locale: Locale }) {
   const copy = translations[locale].stack;
   const stackGroups = getStackGroups(locale);
 

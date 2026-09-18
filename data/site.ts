@@ -1,16 +1,8 @@
-/**
- * Central site configuration.
- *
- * NEXT_PUBLIC_SITE_URL — canonical production origin (used for metadata,
- * Open Graph, sitemap and robots). Falls back to localhost in development.
- * Set it in `.env.local` / the hosting provider before deploying.
- *
- * contactEmail — intentionally empty until a real address is provided.
- * The contact section renders it only when non-empty; no fake data is shown.
- */
+import { resolveSiteUrl } from "@/lib/site-url";
 
-const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-const siteUrl = configuredUrl ? configuredUrl : "http://localhost:3000";
+const siteUrl = resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL, {
+  allowLocalProduction: process.env.ALLOW_LOCAL_SITE_URL === "true",
+});
 
 export const site = {
   name: "Mahmoud Adel",
@@ -32,9 +24,6 @@ export const site = {
     display: "011 4055 8803",
     url: "https://wa.me/201140558803",
   },
-  /**
-   * Replace with a real address to enable email links in the contact section.
-   */
   contactEmail: "",
 } as const;
 

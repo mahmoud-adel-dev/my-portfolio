@@ -1,7 +1,4 @@
-"use client";
-
 import type { ReactNode } from "react";
-import { usePreferences } from "@/components/providers/preferences-provider";
 import type { DiagramId } from "@/data/projects";
 import type { Locale } from "@/lib/i18n";
 
@@ -71,11 +68,12 @@ function LaneLabel({ children }: { children: ReactNode }) {
 export function Diagram({
   id,
   caption,
+  locale,
 }: {
   id: DiagramId;
   caption: string;
+  locale: Locale;
 }) {
-  const { locale } = usePreferences();
   const diagrams: Record<DiagramId, ReactNode> = {
     chatzi: <ChatziDiagram locale={locale} />,
     aidl: <AidlDiagram locale={locale} />,

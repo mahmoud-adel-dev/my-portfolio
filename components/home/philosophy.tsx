@@ -1,13 +1,9 @@
-"use client";
-
-import { usePreferences } from "@/components/providers/preferences-provider";
 import { Section } from "@/components/ui/section";
 import { getPrinciples } from "@/data/expertise";
-import { translations } from "@/lib/i18n";
+import { translations, type Locale } from "@/lib/i18n";
 
 /** Engineering philosophy — numbered principles, typographic, two columns. */
-export function Philosophy() {
-  const { locale } = usePreferences();
+export function Philosophy({ locale }: { locale: Locale }) {
   const copy = translations[locale].philosophy;
   const principles = getPrinciples(locale);
 

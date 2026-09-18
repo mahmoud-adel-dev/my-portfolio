@@ -1,22 +1,24 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
+import { localePath, supportedLocales } from "@/lib/i18n";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const routes = ["", ...projects.map((project) => `projects/${project.slug}`)];
 
-  return [
-    {
-      url: site.url,
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    ...projects.map((project) => ({
-      url: `${site.url}/projects/${project.slug}`,
-      lastModified,
+  return routes.flatMap((path) =>
+    supportedLocales.map((locale) => ({
+      url: new URL(localePath(locale, path), site.url).toString(),
       changeFrequency: "monthly" as const,
-      priority: 0.8,
+      priority: path ? 0.8 : 1,
+      alternates: {
+        languages: Object.fromEntries(
+          supportedLocales.map((language) => [
+            language,
+            new URL(localePath(language, path), site.url).toString(),
+          ]),
+        ),
+      },
     })),
-  ];
+  );
 }

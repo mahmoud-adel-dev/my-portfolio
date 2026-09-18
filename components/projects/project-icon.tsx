@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
   BarChart3,
+  Boxes,
   Gamepad2,
   GraduationCap,
   MessageSquare,
@@ -19,6 +20,7 @@ const icons: Record<string, ComponentType<LucideProps>> = {
   omnichannel: Radio,
   gaming: Gamepad2,
   student: GraduationCap,
+  default: Boxes,
 };
 
 export function ProjectIcon({
@@ -30,13 +32,13 @@ export function ProjectIcon({
   className?: string;
   size?: number;
 }) {
-  const Icon = icons[id] ?? Network;
+  const Icon = icons[id] ?? Boxes;
 
   return (
     <span
       aria-hidden="true"
       className={cn(
-        "flex size-11 shrink-0 items-center justify-center border border-accent/35 bg-accent/8 text-accent transition-colors group-hover:border-accent group-hover:bg-accent/12",
+        "project-icon flex size-11 shrink-0 items-center justify-center border transition-colors",
         className,
       )}
     >

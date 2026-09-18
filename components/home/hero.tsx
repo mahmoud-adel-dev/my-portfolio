@@ -1,75 +1,81 @@
-"use client";
-
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Blocks, Bot, Database, Workflow } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button-link";
-import { usePreferences } from "@/components/providers/preferences-provider";
-import { Reveal } from "@/components/ui/reveal";
+import { ProjectIcon } from "@/components/projects/project-icon";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
-import { translations } from "@/lib/i18n";
+import { localePath, type Locale, type Translation } from "@/lib/i18n";
 
-export function Hero() {
-  const { locale } = usePreferences();
-  const copy = translations[locale].hero;
+export function Hero({ locale, copy }: { locale: Locale; copy: Translation["hero"] }) {
+  const stats =
+    locale === "ar"
+      ? [
+          ["04", "دراسات حالة"],
+          ["07", "مشاريع عامة"],
+          ["AR / EN", "لغتان"],
+        ]
+      : [
+          ["04", "Case studies"],
+          ["07", "Public builds"],
+          ["AR / EN", "Two languages"],
+        ];
 
   return (
-    <section className="relative">
-      <div className="container-site pt-28 pb-12 md:pt-36 md:pb-20">
-        <Reveal>
-          <p className="eyebrow flex flex-wrap items-center gap-3">
-            {copy.disciplines[0]}
-            <span aria-hidden="true" className="text-accent">/</span>
-            {copy.disciplines[1]}
-            <span aria-hidden="true" className="text-accent">/</span>
-            {copy.disciplines[2]}
+    <section className="hero-shell relative overflow-hidden border-b border-line">
+      <HeroSystem />
+
+      <div className="container-site relative z-10 flex min-h-[46rem] flex-col justify-center pt-28 pb-10 md:min-h-[48rem] md:pt-32">
+        <div className="max-w-4xl">
+          <p className="eyebrow hero-enter flex flex-wrap items-center gap-3">
+            {copy.disciplines.map((discipline, index) => (
+              <span key={discipline} className="contents">
+                {index > 0 ? <span aria-hidden="true" className="text-accent">/</span> : null}
+                <span>{discipline}</span>
+              </span>
+            ))}
           </p>
-        </Reveal>
 
-        <Reveal delay={0.08}>
-          <h1
-            className={`display-1 mt-6 text-balance ${
-              locale === "ar" ? "max-w-5xl" : "max-w-4xl"
-            }`}
-          >
-            {copy.name}
-            <br />
-            <span className="text-muted">
-              {copy.role}
-            </span>
+          <h1 className="display-1 hero-enter hero-enter-delay-1 mt-7 text-balance">
+            <span className="block text-fg">{copy.name}</span>
+            <span className="mt-2 block max-w-4xl text-muted">{copy.role}</span>
           </h1>
-        </Reveal>
 
-        <Reveal delay={0.16}>
-          <p className="lede mt-6 max-w-xl md:mt-7">
+          <p className="lede hero-enter hero-enter-delay-2 mt-7 max-w-2xl">
             {copy.lede}
           </p>
-        </Reveal>
 
-        <Reveal delay={0.24}>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-9">
-            <ButtonLink href="/#work">
+          <div className="hero-enter hero-enter-delay-3 mt-9 flex flex-wrap items-center gap-3">
+            <ButtonLink href={`${localePath(locale)}#work`}>
               {copy.explore}
-              <ArrowDown size={16} strokeWidth={1.5} />
+              <ArrowDown size={16} strokeWidth={1.7} />
             </ButtonLink>
             <ButtonLink href={site.github.url} variant="secondary" external>
               {copy.github}
-              <ArrowUpRight size={16} strokeWidth={1.5} />
+              <ArrowUpRight size={16} strokeWidth={1.7} />
             </ButtonLink>
           </div>
-        </Reveal>
+        </div>
+
+        <dl className="mt-14 grid max-w-2xl grid-cols-3 border-y border-line sm:max-w-xl">
+          {stats.map(([value, label]) => (
+            <div key={label} className="border-e border-line px-3 py-4 first:ps-0 last:border-e-0 sm:px-5">
+              <dt className="font-mono text-sm font-semibold text-fg">{value}</dt>
+              <dd className="mt-1 text-[11px] leading-tight text-faint sm:text-xs">{label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
-      {/* Live index of what is being built — real repositories, not decoration */}
-      <div className="border-t border-line">
+      <div className="relative z-10 border-t border-line bg-background/85">
         <div className="container-site flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:gap-8">
           <p className="eyebrow shrink-0">{copy.currentlyBuilding}</p>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2" aria-label={copy.activeProjectsLabel}>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2" aria-label={copy.activeProjectsLabel}>
             {projects.map((project) => (
-              <li key={project.slug} className="font-mono text-xs text-muted">
+              <li key={project.slug}>
                 <a
-                  href={`/projects/${project.slug}`}
-                  className="transition-colors hover:text-accent"
+                  href={localePath(locale, `projects/${project.slug}`)}
+                  className="inline-flex items-center gap-2 text-xs font-medium text-muted transition-colors hover:text-accent"
                 >
+                  <ProjectIcon id={project.slug} size={13} className="size-6 border-line" />
                   {project.title}
                 </a>
               </li>
@@ -78,5 +84,30 @@ export function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+function HeroSystem() {
+  const nodes = [
+    { icon: Blocks, label: "Products", className: "start-[12%] top-[16%]" },
+    { icon: Bot, label: "AI", className: "end-[8%] top-[34%]" },
+    { icon: Database, label: "Data", className: "start-[3%] bottom-[22%]" },
+    { icon: Workflow, label: "Ops", className: "end-[22%] bottom-[10%]" },
+  ];
+
+  return (
+    <div aria-hidden="true" className="hero-system pointer-events-none absolute inset-y-0 end-0 hidden w-[46%] lg:block">
+      <span className="hero-line absolute start-[18%] end-[18%] top-1/2 h-px" />
+      <span className="hero-line absolute start-1/2 top-[18%] bottom-[18%] w-px" />
+      <span className="hero-core absolute start-1/2 top-1/2 flex size-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+        <span className="font-mono text-lg font-semibold text-accent">MA</span>
+      </span>
+      {nodes.map(({ icon: Icon, label, className }) => (
+        <span key={label} className={`hero-node absolute ${className}`}>
+          <Icon size={18} strokeWidth={1.5} />
+          <span>{label}</span>
+        </span>
+      ))}
+    </div>
   );
 }

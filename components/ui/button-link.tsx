@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-medium transition-colors duration-150 select-none";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-[4px] font-semibold transition-[background-color,border-color,color,transform] duration-150 select-none active:translate-y-px";
 
 const variants = {
   primary: "bg-accent text-on-accent hover:bg-accent-strong px-5 py-3 text-sm",

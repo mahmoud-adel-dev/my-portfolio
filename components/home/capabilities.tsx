@@ -1,13 +1,11 @@
-"use client";
-
-import { usePreferences } from "@/components/providers/preferences-provider";
+import { Bot, Boxes, CloudCog, ShoppingCart } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { getCapabilities } from "@/data/expertise";
-import { translations } from "@/lib/i18n";
+import { translations, type Locale } from "@/lib/i18n";
 
-/** "What I Build" — four capability areas separated by hairlines, no cards. */
-export function Capabilities() {
-  const { locale } = usePreferences();
+const capabilityIcons = [Boxes, Bot, ShoppingCart, CloudCog] as const;
+
+export function Capabilities({ locale }: { locale: Locale }) {
   const copy = translations[locale].capabilities;
   const capabilities = getCapabilities(locale);
 
@@ -19,37 +17,30 @@ export function Capabilities() {
       title={copy.title}
       lead={copy.lead}
     >
-      <div className="grid gap-x-14 gap-y-12 md:grid-cols-2">
-        {capabilities.map((capability, i) => (
-          <div
-            key={capability.title}
-            className="border-t border-line pt-7 first:pt-7"
-          >
-            <p aria-hidden="true" className="font-mono text-xs text-accent">
-              {String(i + 1).padStart(2, "0")}
-            </p>
-            <h3 className="mt-3 text-lg font-semibold text-fg">
-              {capability.title}
-            </h3>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
-              {capability.description}
-            </p>
-            <ul className="mt-5 space-y-2">
-              {capability.points.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-baseline gap-3 text-sm text-muted"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-[7px] size-1 shrink-0 bg-accent/70"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      <div className="grid border-s border-t border-line md:grid-cols-2">
+        {capabilities.map((capability, index) => {
+          const Icon = capabilityIcons[index] ?? Boxes;
+          return (
+            <article key={capability.title} className="capability-panel">
+              <div className="flex items-center justify-between gap-4">
+                <span className="capability-icon"><Icon size={19} strokeWidth={1.55} /></span>
+                <span aria-hidden="true" className="font-mono text-xs font-semibold text-faint">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <h3 className="mt-6 text-lg font-semibold text-fg">{capability.title}</h3>
+              <p className="mt-3 max-w-md text-sm leading-6 text-muted">{capability.description}</p>
+              <ul className="mt-5 space-y-2.5">
+                {capability.points.map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-sm leading-6 text-muted">
+                    <span aria-hidden="true" className="mt-2.5 size-1 shrink-0 bg-accent" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          );
+        })}
       </div>
     </Section>
   );

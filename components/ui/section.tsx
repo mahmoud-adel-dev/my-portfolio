@@ -15,10 +15,6 @@ type SectionProps = {
   as?: "h2" | "h3";
 };
 
-/**
- * Editorial section frame: hairline top rule, mono eyebrow with index,
- * asymmetric two-column heading grid on desktop.
- */
 export function Section({
   id,
   index,
@@ -31,19 +27,19 @@ export function Section({
 }: SectionProps) {
   return (
     <section id={id} className={cn("border-t border-line", className)}>
-      <div className="container-site py-20 md:py-28">
+      <div className="container-site py-20 md:py-24 lg:py-28">
         <header
           className={cn(
-            "mb-12 grid gap-x-10 gap-y-4 md:mb-16 md:grid-cols-[11rem_1fr]",
+            "mb-12 grid gap-x-10 gap-y-5 md:mb-14 md:grid-cols-[9rem_minmax(0,1fr)] lg:mb-16",
           )}
         >
-          <p className="eyebrow pt-2 md:text-end">
+          <p className="eyebrow flex items-center gap-2 pt-2 md:flex-col md:items-end md:text-end">
             {index ? `${index} / ` : ""}
             {eyebrow}
           </p>
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <Tag className="display-2 text-balance">{title}</Tag>
-            {lead ? <p className="lede mt-5">{lead}</p> : null}
+            {lead ? <p className="lede mt-5 max-w-2xl">{lead}</p> : null}
           </div>
         </header>
         {children}

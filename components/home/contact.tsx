@@ -1,43 +1,65 @@
-"use client";
-
-import { Code2, MessageCircle, Users } from "lucide-react";
-import { usePreferences } from "@/components/providers/preferences-provider";
-import { ButtonLink } from "@/components/ui/button-link";
+import { ArrowUpRight, Code2, Facebook, MessageCircle } from "lucide-react";
 import { site } from "@/data/site";
-import { translations } from "@/lib/i18n";
+import { translations, type Locale } from "@/lib/i18n";
 
-/** Contact channels are configured centrally in data/site.ts. */
-export function Contact() {
-  const { locale } = usePreferences();
+export function Contact({ locale }: { locale: Locale }) {
   const copy = translations[locale].contact;
 
   return (
-    <section id="contact" className="border-t border-line">
-      <div className="container-site py-24 md:py-36">
+    <section id="contact" className="contact-section border-t border-line">
+      <div className="container-site py-24 md:py-32">
         <p className="eyebrow">07 / {copy.eyebrow}</p>
-        <h2 className="display-1 mt-8 max-w-3xl text-balance">
-          {copy.title}
-        </h2>
-        <p className="lede mt-8 max-w-xl">
-          {copy.body}
-        </p>
+        <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-end">
+          <div>
+            <h2 className="display-2 max-w-3xl text-balance">{copy.title}</h2>
+            <p className="lede mt-6 max-w-2xl">{copy.body}</p>
+          </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <ButtonLink href={site.whatsapp.url} external>
-            <MessageCircle size={17} strokeWidth={1.6} />
-            {copy.whatsapp}
-            <bdi className="font-mono text-xs">{site.whatsapp.display}</bdi>
-          </ButtonLink>
-          <ButtonLink href={site.facebook.url} variant="secondary" external>
-            <Users size={17} strokeWidth={1.6} />
-            {copy.facebook}
-          </ButtonLink>
-          <ButtonLink href={site.github.url} variant="secondary" external>
-            <Code2 size={17} strokeWidth={1.6} />
-            {copy.github}
-          </ButtonLink>
+          <div className="grid gap-3">
+            <ContactLink
+              href={site.whatsapp.url}
+              icon={MessageCircle}
+              label={copy.whatsapp}
+              detail={site.whatsapp.display}
+              primary
+            />
+            <ContactLink href={site.facebook.url} icon={Facebook} label={copy.facebook} />
+            <ContactLink href={site.github.url} icon={Code2} label={copy.github} />
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ContactLink({
+  href,
+  icon: Icon,
+  label,
+  detail,
+  primary = false,
+}: {
+  href: string;
+  icon: typeof Code2;
+  label: string;
+  detail?: string;
+  primary?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={primary ? "contact-link contact-link-primary" : "contact-link"}
+    >
+      <span className="flex items-center gap-3">
+        <Icon size={18} strokeWidth={1.7} />
+        <span>
+          <span className="block text-sm font-semibold">{label}</span>
+          {detail ? <bdi className="mt-0.5 block text-xs opacity-75">{detail}</bdi> : null}
+        </span>
+      </span>
+      <ArrowUpRight size={17} strokeWidth={1.7} />
+    </a>
   );
 }
