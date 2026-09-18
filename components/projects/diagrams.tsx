@@ -75,6 +75,7 @@ export function Diagram({
   locale: Locale;
 }) {
   const diagrams: Record<DiagramId, ReactNode> = {
+    netmanager: <NetManagerDiagram locale={locale} />,
     chatzi: <ChatziDiagram locale={locale} />,
     aidl: <AidlDiagram locale={locale} />,
     seals: <SealsDiagram locale={locale} />,
@@ -459,3 +460,93 @@ function LumoraDiagram({ locale }: { locale: Locale }) {
     </div>
   );
 }
+
+/* -------------------------------------------------------------------------- */
+/* Enterprise IT Network & Endpoint Manager — Layered Infrastructure          */
+/* -------------------------------------------------------------------------- */
+
+const netmanagerCopy = {
+  en: {
+    networkLane: "Network Discovery & Switch Correlation",
+    snmp: "SNMP v2c/v3 Engine",
+    snmpSub: "Bridge MIB · ARP tables · LLDP & CDP links · VLAN tags",
+    switchPort: "Switch-to-Port Topology",
+    switchPortSub: "Deterministic physical port correlation for every connected host",
+    controlLane: "Central Control & Daemon Layer",
+    webConsole: "Next.js 16 Web Console",
+    webConsoleSub: "Full Arabic RTL & English LTR · RBAC · Topology canvas",
+    workerDaemon: "Node.js Worker Daemon",
+    workerDaemonSub: "Autonomous polling · Canary leases · LDAPS AD sync",
+    sqlite: "Embedded SQLite (WAL Mode)",
+    sqliteSub: "High-concurrency persistence · hot backups · zero cloud dependencies",
+    endpointLane: "Managed Endpoint Fleet",
+    agent: ".NET 8 C# Windows Agent",
+    agentSub: "Lightweight service (<30MB) · 60s heartbeats · hardware/software telemetry",
+    quarantine: "WFP Isolation Engine",
+    quarantineSub: "Sub-second emergency quarantine · severed local traffic · encrypted remediation pipe",
+    canary: "Canary Rollouts Engine",
+    canarySub: "Ring 0 Lab → Ring 1 (15%) → Ring 2 (100%) with auto-rollback",
+  },
+  ar: {
+    networkLane: "استكشاف الشبكة وربط منافذ السويتشات",
+    snmp: "محرك SNMP v2c/v3",
+    snmpSub: "قراءة Bridge MIB وجداول ARP وروابط LLDP/CDP وتصنيف VLAN",
+    switchPort: "خريطة طوبولوجيا المنافذ",
+    switchPortSub: "ربط حتمي لكل جهاز في الشبكة برقم منفذ السويتش الفعلي",
+    controlLane: "طبقة التحكم والخادم والمعالجة",
+    webConsole: "لوحة تحكم Next.js 16",
+    webConsoleSub: "واجهة ثنائية اللغة (RTL/LTR) · صلاحيات RBAC · خريطة تفاعلية",
+    workerDaemon: "خادم المعالجة الخلفي (Worker Daemon)",
+    workerDaemonSub: "جدولة المسح · عقود تأجير المهام · مزامنة الدليل النشط LDAPS",
+    sqlite: "قاعدة بيانات SQLite (نمط WAL)",
+    sqliteSub: "عمليات قراءة وكتابة متزامنة · نسخ ساخن · استقلالية تامة دون سحابة",
+    endpointLane: "الأسطول المدار ونقاط النهاية",
+    agent: "عميل ويندوز (.NET 8 C#)",
+    agentSub: "خدمة خفيفة (<30 ميجابايت) · نبضات كل 60ث · جرد كامل للعتاد والبرامج",
+    quarantine: "محرك العزل الفوري (WFP)",
+    quarantineSub: "عزل الجهاز المصاب في أجزاء من الثانية مع الإبقاء على مسار مشفر للصيانة",
+    canary: "محرك النشر التدريجي (Canary)",
+    canarySub: "الحلقة 0 للمختبر ➔ الحلقة 1 للتجربة (15%) ➔ الحلقة 2 للإنتاج الشامل",
+  },
+};
+
+function NetManagerDiagram({ locale }: { locale: Locale }) {
+  const copy = netmanagerCopy[locale];
+
+  return (
+    <div className="mx-auto max-w-2xl space-y-6 font-mono">
+      <div>
+        <LaneLabel>{copy.networkLane}</LaneLabel>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Node label={copy.snmp} sub={copy.snmpSub} />
+          <Node label={copy.switchPort} sub={copy.switchPortSub} accent />
+        </div>
+      </div>
+
+      <Arrow />
+
+      <div>
+        <LaneLabel>{copy.controlLane}</LaneLabel>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Node label={copy.webConsole} sub={copy.webConsoleSub} accent />
+          <Node label={copy.workerDaemon} sub={copy.workerDaemonSub} />
+        </div>
+        <div className="mt-2">
+          <Node label={copy.sqlite} sub={copy.sqliteSub} dashed />
+        </div>
+      </div>
+
+      <Arrow />
+
+      <div>
+        <LaneLabel>{copy.endpointLane}</LaneLabel>
+        <div className="grid gap-2 sm:grid-cols-3">
+          <Node label={copy.agent} sub={copy.agentSub} />
+          <Node label={copy.quarantine} sub={copy.quarantineSub} accent />
+          <Node label={copy.canary} sub={copy.canarySub} />
+        </div>
+      </div>
+    </div>
+  );
+}
+

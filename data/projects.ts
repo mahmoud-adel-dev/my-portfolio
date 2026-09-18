@@ -11,7 +11,7 @@ export type StackGroup = {
   items: string[];
 };
 
-export type DiagramId = "chatzi" | "aidl" | "seals" | "lumora";
+export type DiagramId = "chatzi" | "aidl" | "seals" | "lumora" | "netmanager";
 
 export type CaseStudy = {
   intro: string;
@@ -56,9 +56,139 @@ const GITHUB = "https://github.com/mahmoud-adel-dev";
 /* Featured projects                                                          */
 /* -------------------------------------------------------------------------- */
 
+const netmanager: Project = {
+  slug: "netmanager",
+  index: "01",
+  title: "Enterprise IT Network & Endpoint Manager",
+  positioning: "On-premises enterprise network & endpoint infrastructure management platform",
+  summary:
+    "A unified infrastructure management platform combining a lightweight .NET 8 C# Windows Agent, SNMP topology switch discovery, instant WFP endpoint quarantine, canary software rollouts, and Active Directory integration.",
+  highlights: [
+    "Windows Agent (.NET 8 <30MB RAM)",
+    "SNMP topology & switch port correlation",
+    "Instant WFP Endpoint Quarantine",
+    "Canary rollouts & SHA-256 validation",
+    "Active Directory & LDAPS integration",
+    "SQLite (WAL mode) + Worker daemon",
+  ],
+  technologies: [
+    "Next.js 16",
+    "React 19",
+    "TypeScript strict",
+    ".NET 8 / C#",
+    "SNMP / LLDP",
+    "SQLite (WAL)",
+    "Tailwind CSS",
+    "Node.js Worker",
+  ],
+  status: "Production-ready — audited & automated E2E verified",
+  repository: `${GITHUB}/enterprise-it-network-manager`,
+  featured: true,
+  caseStudy: {
+    intro:
+      "Enterprise IT Network & Endpoint Manager was built specifically for environments requiring zero cloud dependencies, complete data sovereignty, and high-speed local network intelligence. It bridges physical switch topology mapping with active endpoint telemetry in one coherent operating surface.",
+    context: [
+      "Enterprise sysadmins typically bounce between disparate network monitors, Active Directory consoles, and heavyweight endpoint management suites. Correlating which physical switch port a malware-infected machine is plugged into can take hours of manual CLI commands.",
+      "This platform eliminates that disconnect: SNMP-driven switch port tables continuously pair MAC and IP addresses with physical ports, while an in-house Windows Service agent reports real-time metrics and allows one-click network isolation.",
+    ],
+    overview:
+      "A layered modular architecture: a Next.js 16 control plane serving a bilingual (Arabic RTL and English LTR) web console, an autonomous background Worker Daemon handling polling and job leases, a local high-concurrency SQLite database operating in WAL mode, and a .NET 8 Windows service agent installed on managed nodes.",
+    challenges: [
+      {
+        title: "Deterministic switch port correlation",
+        detail:
+          "SNMP bridge MIBs, ARP tables, and LLDP/CDP neighbors are harvested concurrently to reconstruct physical network topology and map each device down to the exact switch port and VLAN without broadcast storms.",
+      },
+      {
+        title: "Sub-second emergency quarantine",
+        detail:
+          "When a threat is identified, an administrator can isolate the endpoint instantly. The agent configures Windows Filtering Platform (WFP) rules that sever all local and internet traffic while maintaining an encrypted tunnel to the management server for remediation.",
+      },
+      {
+        title: "Safe large-scale software distribution",
+        detail:
+          "Canary rollout rings (Lab ring 0 -> 15% canary ring 1 -> 100% production ring 2) distribute large silent installer packages (MSI/EXE/PowerShell) with SHA-256 integrity checks, atomic job leases, and automatic rollbacks on threshold failures.",
+      },
+      {
+        title: "Zero cloud dependencies & air-gapped readiness",
+        detail:
+          "Designed to operate entirely on-premises with no external telemetry, phone-home APIs, or cloud services, running on an embedded SQLite engine with WAL mode and hot backup scripts.",
+      },
+    ],
+    architecture: {
+      summary:
+        "Next.js 16 web control plane and Node.js worker daemon interface with a WAL-mode SQLite database, synchronizing with Active Directory via LDAPS, polling switches via SNMP, and communicating with .NET 8 agents over authenticated REST contracts.",
+      diagram: "netmanager",
+      notes: [
+        "Windows Agent runs as an unmanaged-memory optimized Windows Service with <30MB footprint and SHA-256 binary validation.",
+        "SQLite runs in Write-Ahead Logging (WAL) mode with busy timeouts for non-blocking concurrent reads and writes.",
+        "Canary rings prevent catastrophic fleet deployments through automated failure-rate circuit breakers.",
+      ],
+    },
+    featureGroups: [
+      {
+        label: "Network & Discovery",
+        items: [
+          "High-speed parallel ICMP & ARP subnet sweep engine",
+          "SNMP switch port correlation (MAC-to-port mapping, VLAN classification)",
+          "Interactive network topology visualization using LLDP and CDP links",
+          "Rogue workgroup & unmanaged device detection against Active Directory",
+        ],
+      },
+      {
+        label: "Endpoint Management",
+        items: [
+          "Windows Service Agent (.NET 8) with 60s heartbeats and hardware/software inventory",
+          "One-click Endpoint Quarantine via Windows Filtering Platform (WFP)",
+          "Remote PowerShell, MSI, and EXE silent package deployment with exit code audits",
+          "Live resource telemetry (CPU, RAM, disk, logged-in user, network adapters)",
+        ],
+      },
+      {
+        label: "Enterprise Operations",
+        items: [
+          "Active Directory sync over LDAPS with remote domain join commands",
+          "Canary deployment pipelines with phased rings and automatic rollback",
+          "Bilingual Arabic (RTL) and English (LTR) interface with zero-reload switching",
+          "Non-blocking hot backups and automated disaster recovery runbooks",
+        ],
+      },
+    ],
+    decisions: [
+      {
+        title: "Lightweight native .NET 8 Agent over script wrappers",
+        detail:
+          "A compiled Windows Service in C#/.NET 8 guarantees rock-solid reliability, minimal memory consumption (<30MB), and direct access to low-level Windows APIs without requiring PowerShell runtime overhead.",
+      },
+      {
+        title: "SQLite in WAL mode for on-premises simplicity",
+        detail:
+          "Eliminating the operational burden of running heavy database clusters for on-prem installations. SQLite with WAL mode delivers thousands of queries per second with zero external configuration.",
+      },
+      {
+        title: "Phased canary rings with atomic leases",
+        detail:
+          "Software deployments use lease contracts and step-based rollout rings, ensuring an unreachable machine or network glitch never hangs the fleet deployment or double-installs packages.",
+      },
+      {
+        title: "Bilingual first-class citizen",
+        detail:
+          "Native Arabic RTL support was architected from the first UI component, allowing regional enterprise operations teams to manage critical infrastructure in their native language comfortably.",
+      },
+    ],
+    stack: [
+      { label: "Control Plane", items: ["Next.js 16", "React 19", "TypeScript strict", "Tailwind CSS"] },
+      { label: "Agent", items: [".NET 8", "C#", "Windows Service", "WFP Firewall APIs"] },
+      { label: "Backend & Daemon", items: ["Node.js Worker", "Zod", "LDAPS / Active Directory", "SNMP v2c/v3"] },
+      { label: "Data Store", items: ["SQLite (WAL mode)", "Hot Backup Scripts"] },
+      { label: "Protocols", items: ["SNMP", "ARP", "ICMP", "LLDP", "CDP", "REST over TLS"] },
+    ],
+  },
+};
+
 const chatzi: Project = {
   slug: "chatzi",
-  index: "01",
+  index: "02",
   title: "ChatZi Next",
   positioning: "Enterprise AI customer engagement platform",
   summary:
@@ -185,7 +315,7 @@ const chatzi: Project = {
 
 const aidl: Project = {
   slug: "aidl",
-  index: "02",
+  index: "03",
   title: "AIDL Platform",
   positioning: "Multi-tenant AI data analyzer — deterministic analytics, explained by AI",
   summary:
@@ -319,7 +449,7 @@ const aidl: Project = {
 
 const seals: Project = {
   slug: "seals",
-  index: "03",
+  index: "04",
   title: "SEALS B2B Marketplace",
   positioning: "Production-oriented B2B wholesale marketplace — Flutter client, Next.js backend",
   summary:
@@ -445,7 +575,7 @@ const seals: Project = {
 
 const lumora: Project = {
   slug: "lumora",
-  index: "04",
+  index: "05",
   title: "Lumora SaaS",
   positioning: "Multi-tenant commerce & operations platform",
   summary:
@@ -561,7 +691,7 @@ const lumora: Project = {
   },
 };
 
-export const projects: Project[] = [chatzi, aidl, seals, lumora];
+export const projects: Project[] = [netmanager, chatzi, aidl, seals, lumora];
 
 /* -------------------------------------------------------------------------- */
 /* Secondary projects — quieter index, equal honesty                          */

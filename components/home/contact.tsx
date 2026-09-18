@@ -1,4 +1,7 @@
-import { ArrowUpRight, Code2, Facebook, MessageCircle } from "lucide-react";
+import type { ComponentType } from "react";
+import { ArrowUpRight, Code2, MessageCircle } from "lucide-react";
+import { FacebookIcon } from "@/components/ui/icons";
+import { ProjectRequestForm } from "@/components/home/request-form";
 import { site } from "@/data/site";
 import { translations, type Locale } from "@/lib/i18n";
 
@@ -9,22 +12,26 @@ export function Contact({ locale }: { locale: Locale }) {
     <section id="contact" className="contact-section border-t border-line">
       <div className="container-site py-24 md:py-32">
         <p className="eyebrow">07 / {copy.eyebrow}</p>
-        <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-end">
-          <div>
-            <h2 className="display-2 max-w-3xl text-balance">{copy.title}</h2>
-            <p className="lede mt-6 max-w-2xl">{copy.body}</p>
+        <div className="mt-8 grid gap-12 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5">
+            <h2 className="display-2 text-balance">{copy.title}</h2>
+            <p className="lede mt-6">{copy.body}</p>
+
+            <div className="mt-8 grid gap-3">
+              <ContactLink
+                href={site.whatsapp.url}
+                icon={MessageCircle}
+                label={copy.whatsapp}
+                detail={site.whatsapp.display}
+                primary
+              />
+              <ContactLink href={site.facebook.url} icon={FacebookIcon} label={copy.facebook} />
+              <ContactLink href={site.github.url} icon={Code2} label={copy.github} />
+            </div>
           </div>
 
-          <div className="grid gap-3">
-            <ContactLink
-              href={site.whatsapp.url}
-              icon={MessageCircle}
-              label={copy.whatsapp}
-              detail={site.whatsapp.display}
-              primary
-            />
-            <ContactLink href={site.facebook.url} icon={Facebook} label={copy.facebook} />
-            <ContactLink href={site.github.url} icon={Code2} label={copy.github} />
+          <div className="lg:col-span-7">
+            <ProjectRequestForm locale={locale} />
           </div>
         </div>
       </div>
@@ -40,7 +47,7 @@ function ContactLink({
   primary = false,
 }: {
   href: string;
-  icon: typeof Code2;
+  icon: ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string }>;
   label: string;
   detail?: string;
   primary?: boolean;
@@ -63,3 +70,4 @@ function ContactLink({
     </a>
   );
 }
+

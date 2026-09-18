@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { SkipLink } from "@/components/layout/skip-link";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { TrackerProvider } from "@/components/providers/tracker-provider";
 import { site } from "@/data/site";
 import {
   isLocale,
@@ -95,12 +96,14 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-screen flex-col">
         <ThemeProvider>
-          <SkipLink label={copy.skipToContent} />
-          <Header locale={locale} copy={copy} />
-          <main id="main" className="flex-1">{children}</main>
-          <Footer copy={copy} locale={locale} />
+          <TrackerProvider locale={locale}>
+            <SkipLink label={copy.skipToContent} />
+            <Header locale={locale} copy={copy} />
+            <main id="main" className="flex-1">{children}</main>
+            <Footer copy={copy} locale={locale} />
+          </TrackerProvider>
         </ThemeProvider>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+        <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: jsonLd }} />
       </body>
     </html>
   );

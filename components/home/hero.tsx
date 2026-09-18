@@ -9,13 +9,13 @@ export function Hero({ locale, copy }: { locale: Locale; copy: Translation["hero
   const stats =
     locale === "ar"
       ? [
-          ["04", "دراسات حالة"],
-          ["07", "مشاريع عامة"],
+          ["05", "دراسات حالة"],
+          ["08", "مشاريع عامة"],
           ["AR / EN", "لغتان"],
         ]
       : [
-          ["04", "Case studies"],
-          ["07", "Public builds"],
+          ["05", "Case studies"],
+          ["08", "Public builds"],
           ["AR / EN", "Two languages"],
         ];
 
@@ -25,6 +25,18 @@ export function Hero({ locale, copy }: { locale: Locale; copy: Translation["hero
 
       <div className="container-site relative z-10 flex min-h-[46rem] flex-col justify-center pt-28 pb-10 md:min-h-[48rem] md:pt-32">
         <div className="max-w-4xl">
+          <div className="hero-enter mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-1 text-xs font-medium text-emerald-400">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+            </span>
+            <span>
+              {locale === "ar"
+                ? "متاح لبناء الأنظمة المؤسسية ومنصات الذكاء الاصطناعي"
+                : "Available for AI SaaS & Enterprise Infrastructure"}
+            </span>
+          </div>
+
           <p className="eyebrow hero-enter flex flex-wrap items-center gap-3">
             {copy.disciplines.map((discipline, index) => (
               <span key={discipline} className="contents">

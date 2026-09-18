@@ -61,6 +61,19 @@ export const capabilities: Capability[] = [
       "CI pipelines & PM2 orchestration",
     ],
   },
+  {
+    title: "Enterprise Networks & Systems",
+    description:
+      "On-premises network orchestration, endpoint management, and systems programming built for air-gapped security and absolute sovereignty.",
+    points: [
+      ".NET 8 / C# Windows Service agents (<30MB)",
+      "SNMP v2c/v3 switch topology & port correlation",
+      "Instant WFP packet-filtering quarantine",
+      "Canary rollouts with SHA-256 validation",
+      "Active Directory & LDAPS integration",
+      "High-performance embedded SQLite (WAL mode)",
+    ],
+  },
 ];
 
 export type StackGroup = {
@@ -79,6 +92,11 @@ export const stackGroups: StackGroup[] = [
     label: "Backend",
     note: "APIs, auth and domain logic",
     items: ["Node.js", "Express", "Python / FastAPI", "NextAuth", "Zod"],
+  },
+  {
+    label: "Systems & Network",
+    note: "Endpoints, switches and discovery",
+    items: [".NET 8 / C#", "Windows Service", "SNMP v2c/v3", "WFP Firewall", "Active Directory", "SQLite WAL"],
   },
   {
     label: "Data",
@@ -190,6 +208,19 @@ const capabilitiesAr: Capability[] = [
       "مسارات CI وإدارة العمليات عبر PM2",
     ],
   },
+  {
+    title: "الشبكات والأنظمة المؤسسية",
+    description:
+      "إدارة البنية التحتية المحلية وهندسة البرمجيات المنخفضة المستوى للبيئات المعزولة والأجهزة الحساسة.",
+    points: [
+      "عملاء ويندوز بلغة .NET 8 / C# بأقل من 30 ميجابايت",
+      "كشف طوبولوجيا السويتشات وربط المنافذ عبر SNMP",
+      "عزل فوري للأجهزة المصابة عبر جدار حماية WFP",
+      "نشر تدريجي للبرمجيات (Canary) مع تدقيق SHA-256",
+      "تكامل ومزامنة الدليل النشط Active Directory / LDAPS",
+      "قواعد بيانات مدمجة بـ SQLite بنمط WAL للسرعة الفائقة",
+    ],
+  },
 ];
 
 const stackGroupsAr: StackGroup[] = [
@@ -202,6 +233,11 @@ const stackGroupsAr: StackGroup[] = [
     label: "الخلفية",
     note: "واجهات API والمصادقة ومنطق المجال",
     items: ["Node.js", "Express", "Python / FastAPI", "NextAuth", "Zod"],
+  },
+  {
+    label: "الأنظمة والشبكات",
+    note: "إدارة الأجهزة والسويتشات والبنية التحتية",
+    items: [".NET 8 / C#", "خدمات ويندوز", "بروتوكول SNMP", "جدار حماية WFP", "Active Directory", "SQLite WAL"],
   },
   {
     label: "البيانات",

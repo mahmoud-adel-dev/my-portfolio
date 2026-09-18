@@ -1,0 +1,69 @@
+{
+  "visits": [
+    {
+      "id": "vis_1789756722744_lcqo8",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/ar",
+      "locale": "ar",
+      "referrer": "http://localhost:3000/ar",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789756722744,
+      "duration": 159
+    },
+    {
+      "id": "vis_1789757133718_0zzjh",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/ar",
+      "locale": "ar",
+      "referrer": "http://localhost:3000/ar",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789757133718,
+      "duration": 5
+    },
+    {
+      "id": "vis_1789757145821_3szqf",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/en",
+      "locale": "en",
+      "referrer": "http://localhost:3000/en",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789757145821,
+      "duration": 104
+    },
+    {
+      "id": "vis_1789757250513_48tlq",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/en",
+      "locale": "en",
+      "referrer": "http://localhost:3000/en",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789757250513,
+      "duration": 5
+    },
+    {
+      "id": "vis_1789757250557_1e4wh",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/en",
+      "locale": "en",
+      "referrer": "http://localhost:3000/en",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789757250557,
+      "duration": 16
+    }
+  ],
+  "clicks": [
+    {
+      "id": "clk_1789757145131_7hybw",
+      "sessionId": "s_1789756722175_pmx1op",
+      "targetUrl": "http://localhost:3000/en",
+      "label": "English",
+      "category": "link",
+      "timestamp": 1789757145131
+    }
+  ]
+}

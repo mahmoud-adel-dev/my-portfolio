@@ -1,0 +1,36 @@
+{
+  "visits": [
+    {
+      "id": "vis_1789756722744_lcqo8",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/ar",
+      "locale": "ar",
+      "referrer": "http://localhost:3000/ar",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789756722744,
+      "duration": 159
+    },
+    {
+      "id": "vis_1789757133718_0zzjh",
+      "sessionId": "s_1789756722175_pmx1op",
+      "path": "/ar",
+      "locale": "ar",
+      "referrer": "http://localhost:3000/ar",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "device": "desktop",
+      "timestamp": 1789757133718,
+      "duration": 12
+    }
+  ],
+  "clicks": [
+    {
+      "id": "clk_1789757145131_7hybw",
+      "sessionId": "s_1789756722175_pmx1op",
+      "targetUrl": "http://localhost:3000/en",
+      "label": "English",
+      "category": "link",
+      "timestamp": 1789757145131
+    }
+  ]
+}

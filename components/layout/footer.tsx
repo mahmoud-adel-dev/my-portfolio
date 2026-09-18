@@ -1,4 +1,6 @@
-import { Code2, Facebook, MessageCircle } from "lucide-react";
+import type { ComponentType } from "react";
+import { Code2, MessageCircle } from "lucide-react";
+import { FacebookIcon } from "@/components/ui/icons";
 import { site } from "@/data/site";
 import type { Locale, Translation } from "@/lib/i18n";
 
@@ -21,7 +23,7 @@ export function Footer({ copy, locale }: { copy: Translation; locale: Locale }) 
 
         <nav aria-label={copy.footer.navigationLabel} className="flex flex-wrap gap-3">
           <FooterLink href={site.github.url} label="GitHub" icon={Code2} />
-          <FooterLink href={site.facebook.url} label={copy.contact.facebook} icon={Facebook} />
+          <FooterLink href={site.facebook.url} label={copy.contact.facebook} icon={FacebookIcon} />
           <FooterLink
             href={site.whatsapp.url}
             label={copy.contact.whatsapp}
@@ -40,12 +42,17 @@ function FooterLink({
 }: {
   href: string;
   label: string;
-  icon: typeof Code2;
+  icon: ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string }>;
 }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="social-pill">
-      <Icon size={15} strokeWidth={1.7} />
-      {label}
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-pill"
+    >
+      <Icon size={14} strokeWidth={1.7} />
+      <span>{label}</span>
     </a>
   );
 }

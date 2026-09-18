@@ -1,8 +1,10 @@
 "use client";
 
+import type { ComponentType } from "react";
 import Link from "next/link";
 import { Dialog } from "@base-ui/react/dialog";
-import { Code2, Facebook, MessageCircle, X } from "lucide-react";
+import { Code2, MessageCircle, X } from "lucide-react";
+import { FacebookIcon } from "@/components/ui/icons";
 import { site } from "@/data/site";
 import { localePath, type Locale, type Translation } from "@/lib/i18n";
 
@@ -71,7 +73,7 @@ export function MobileNav({ open, onClose, locale, copy }: MobileNavProps) {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <SocialLink href={site.github.url} icon={Code2} label="GitHub" />
-              <SocialLink href={site.facebook.url} icon={Facebook} label={copy.contact.facebook} />
+              <SocialLink href={site.facebook.url} icon={FacebookIcon} label={copy.contact.facebook} />
               <SocialLink
                 href={site.whatsapp.url}
                 icon={MessageCircle}
@@ -91,7 +93,7 @@ function SocialLink({
   label,
 }: {
   href: string;
-  icon: typeof Code2;
+  icon: ComponentType<{ size?: number | string; strokeWidth?: number | string; className?: string }>;
   label: string;
 }) {
   return (
@@ -102,7 +104,7 @@ function SocialLink({
       className="social-pill"
     >
       <Icon size={16} strokeWidth={1.7} />
-      {label}
+      <span>{label}</span>
     </a>
   );
 }

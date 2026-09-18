@@ -1,6 +1,7 @@
 import { About } from "@/components/home/about";
 import { Capabilities } from "@/components/home/capabilities";
 import { Contact } from "@/components/home/contact";
+import { GithubExplorer } from "@/components/home/github-explorer";
 import { GithubPanel } from "@/components/home/github-panel";
 import { Hero } from "@/components/home/hero";
 import { MoreProjects } from "@/components/home/more-projects";
@@ -26,6 +27,7 @@ export default async function HomePage({
       <Capabilities locale={locale} />
       <Stack locale={locale} />
       <Philosophy locale={locale} />
+      <GithubExplorer locale={locale} />
       <About locale={locale} />
       <GithubPanel locale={locale} />
       <Contact locale={locale} />

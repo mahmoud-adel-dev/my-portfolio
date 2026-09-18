@@ -8,11 +8,13 @@ import {
   MessageSquare,
   Network,
   Radio,
+  ShieldCheck,
   ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const icons: Record<string, ComponentType<LucideProps>> = {
+  netmanager: ShieldCheck,
   chatzi: MessageSquare,
   aidl: BarChart3,
   seals: Network,

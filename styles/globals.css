@@ -65,6 +65,11 @@
   body {
     min-width: 320px;
     background: var(--background);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 180, 84, 0.08), transparent),
+      radial-gradient(circle at 100% 30%, rgba(255, 180, 84, 0.03), transparent 25%),
+      radial-gradient(circle at 0% 70%, rgba(255, 180, 84, 0.03), transparent 25%);
+    background-attachment: fixed;
     color: var(--fg);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
